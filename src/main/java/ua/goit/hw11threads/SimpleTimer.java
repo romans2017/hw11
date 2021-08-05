@@ -61,5 +61,4 @@ public class SimpleTimer {
         };
         new Thread(notifyTimeInterval).start();
     }
-
 }
