@@ -1,7 +1,9 @@
-import ua.goit.hw11threads.ThreadTimer;
+import ua.goit.hw11threads.SimpleTimer;
 
 public class ThreadTest {
     public static void main(String[] args) {
-        ThreadTimer threadTimer = new ThreadTimer();
+        SimpleTimer simpleTimer = new SimpleTimer(3);
+        simpleTimer.startTimer();
+        simpleTimer.startNotify();
     }
 }
