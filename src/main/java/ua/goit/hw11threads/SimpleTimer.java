@@ -1,16 +1,16 @@
 package ua.goit.hw11threads;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class SimpleTimer {
     private static final int NOTIFY_INTERVAL = 5;
 
     private int notifyInterval;
-    private LocalDateTime currentDate = LocalDateTime.now();
-    boolean switcher;
+    private int incrementalNotifyInterval;
 
     public SimpleTimer(int notifyInterval) {
-        this.notifyInterval = notifyInterval;
+        this.notifyInterval = this.incrementalNotifyInterval = notifyInterval;
     }
 
     public SimpleTimer() {
@@ -18,24 +18,21 @@ public class SimpleTimer {
     }
 
     synchronized public void printCurrentDate() throws InterruptedException {
-        while (switcher) {
+        while (incrementalNotifyInterval == 0) {
             wait();
         }
-        for (int i = 0; i < notifyInterval; i++) {
-            System.out.println(currentDate);
-            currentDate = LocalDateTime.now();
-            Thread.sleep(1000);
-        }
-        switcher = true;
+        Thread.sleep(1000);
+        System.out.println(LocalDateTime.now().withNano(0).format(DateTimeFormatter.ofPattern("E dd.MM.yyyy HH:mm:ss")));
+        incrementalNotifyInterval--;
         notify();
     }
 
     synchronized public void printIntervalNotify() throws InterruptedException {
-        while (!switcher) {
+        while (incrementalNotifyInterval > 0) {
             wait();
         }
-        System.out.println(notifyInterval + " sec have passed");
-        switcher = false;
+        System.out.println("Прошло " + notifyInterval + " сек");
+        incrementalNotifyInterval = notifyInterval;
         notify();
     }
 
