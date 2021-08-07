@@ -1,14 +1,18 @@
 import ua.goit.hw11threads.NumberThreads;
 import ua.goit.hw11threads.SimpleTimer;
 
-import java.util.Arrays;
-
 public class ThreadTest {
-    public static void main(String[] args) throws InterruptedException {
-        /*SimpleTimer simpleTimer = new SimpleTimer();
+
+    private static void testSimpleTimer() {
+        System.out.println("Test SimpleTimer");
+        SimpleTimer simpleTimer = new SimpleTimer();
         simpleTimer.startTimer();
-        simpleTimer.startNotify();*/
-        NumberThreads numberThreads = new NumberThreads(15);
+        simpleTimer.startNotify();
+    }
+
+    private static void testNumberThread() throws InterruptedException {
+        System.out.println("Test NumberThreads");
+        NumberThreads numberThreads = new NumberThreads(100);
         Thread a = numberThreads.startA();
         Thread b = numberThreads.startB();
         Thread c = numberThreads.startC();
@@ -24,5 +28,12 @@ public class ThreadTest {
         d.join();
 
         System.out.println(numberThreads);
+    }
+
+    public static void main(String[] args) throws InterruptedException {
+        testNumberThread();
+        System.out.println();
+        Thread.sleep(2000);
+        testSimpleTimer();
     }
 }

@@ -5,12 +5,25 @@ import java.util.function.IntConsumer;
 
 public class NumberThreads {
 
+    private static boolean SHOW_NOTIFICATIONS = false;
+    private static int N = 15;
+
     private final int n;
     private final String[] result;
+    private final boolean showNotifications;
+
+    public NumberThreads(int n, boolean showNotifications) {
+        this.n = n;
+        this.showNotifications = showNotifications;
+        this.result = new String[n];
+    }
 
     public NumberThreads(int n) {
-        this.n = n;
-        this.result = new String[n];
+        this(n, SHOW_NOTIFICATIONS);
+    }
+
+    public NumberThreads() {
+        this(N, SHOW_NOTIFICATIONS);
     }
 
     private void checkMod(int number, int mod, String replacement) {
@@ -19,22 +32,22 @@ public class NumberThreads {
                 && number % mod == 0) {
             result[number - 1] = replacement;
         }
-        System.out.println(Thread.currentThread().getName() + " " + number + " " + result[number - 1]);
+        if (showNotifications) {
+            System.out.println(Thread.currentThread().getName() + " " + number + " " + result[number - 1]);
+        }
     }
 
-    synchronized private void fizz(int number) throws InterruptedException {
+    synchronized private void fizz(int number) {
         checkMod(number, 3, "fizz");
-        Thread.sleep(3);
-        //notify();
+        notify();
     }
 
-    synchronized private void buzz(int number) throws InterruptedException {
+    synchronized private void buzz(int number) {
         checkMod(number, 5, "buzz");
-        Thread.sleep(4);
-        //notify();
+        notify();
     }
 
-    synchronized private void fizzbuzz(int number) throws InterruptedException {
+    synchronized private void fizzbuzz(int number) {
         if ((result[number - 1] == null
                 || result[number - 1].equals(String.valueOf(number))
                 || result[number - 1].equals("fizz")
@@ -42,18 +55,20 @@ public class NumberThreads {
                 && number % 15 == 0) {
             result[number - 1] = "fizzbuzz";
         }
-        System.out.println(Thread.currentThread().getName() + " " + number + " " + result[number - 1]);
-        Thread.sleep(3);
-        //notify();
+        if (showNotifications) {
+            System.out.println(Thread.currentThread().getName() + " " + number + " " + result[number - 1]);
+        }
+        notify();
     }
 
-    synchronized private void numbers(int number) throws InterruptedException {
+    synchronized private void numbers(int number) {
         if (result[number - 1] == null) {
             result[number - 1] = String.valueOf(number);
         }
-        System.out.println(Thread.currentThread().getName() + " " + number + " " + result[number - 1]);
-        Thread.sleep(4);
-        //notify();
+        if (showNotifications) {
+            System.out.println(Thread.currentThread().getName() + " " + number + " " + result[number - 1]);
+        }
+        notify();
     }
 
     private Thread startThread(IntConsumer func) {
@@ -66,55 +81,24 @@ public class NumberThreads {
     }
 
     public Thread startA() {
-        Thread thread = startThread(number -> {
-            try {
-                fizz(number);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        });
-        thread.setName("A");
-        return thread;
+        return startThread(this::fizz);
     }
 
     public Thread startB() {
-        Thread thread = startThread(number -> {
-            try {
-                buzz(number);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        });
-        thread.setName("B");
-        return thread;
+        return startThread(this::buzz);
     }
 
     public Thread startC() {
-        Thread thread = startThread(number -> {
-            try {
-                fizzbuzz(number);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        });
-        thread.setName("C");
-        return thread;
+        return startThread(this::fizzbuzz);
     }
 
     public Thread startD() {
-        Thread thread = startThread(number -> {
-            try {
-                numbers(number);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        });
-        thread.setName("D");
-        return thread;
+        return startThread(this::numbers);
     }
 
     @Override
     public String toString() {
-        return Arrays.toString(result);
+        return Arrays.toString(result).replaceAll("[\\[\\]]","");
     }
+
 }
