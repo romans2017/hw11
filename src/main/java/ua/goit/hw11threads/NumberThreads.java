@@ -98,7 +98,7 @@ public class NumberThreads {
 
     @Override
     public String toString() {
-        return Arrays.toString(result).replaceAll("[\\[\\]]","");
+        return Arrays.toString(result).replaceAll("[\\[\\]]", "");
     }
 
 }
