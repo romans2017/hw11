@@ -39,12 +39,10 @@ public class NumberThreads {
 
     synchronized private void fizz(int number) {
         checkMod(number, 3, "fizz");
-        notify();
     }
 
     synchronized private void buzz(int number) {
         checkMod(number, 5, "buzz");
-        notify();
     }
 
     synchronized private void fizzbuzz(int number) {
@@ -58,7 +56,6 @@ public class NumberThreads {
         if (showNotifications) {
             System.out.println(Thread.currentThread().getName() + " " + number + " " + result[number - 1]);
         }
-        notify();
     }
 
     synchronized private void numbers(int number) {
@@ -68,7 +65,6 @@ public class NumberThreads {
         if (showNotifications) {
             System.out.println(Thread.currentThread().getName() + " " + number + " " + result[number - 1]);
         }
-        notify();
     }
 
     private Thread startThread(IntConsumer func) {

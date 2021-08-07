@@ -18,7 +18,7 @@ public class ThreadTest {
 
     private static void testNumberThread() throws InterruptedException {
         System.out.println("Test NumberThreads");
-        NumberThreads numberThreads = new NumberThreads(100);
+        NumberThreads numberThreads = new NumberThreads(100, true);
         Thread a = numberThreads.startA();
         Thread b = numberThreads.startB();
         Thread c = numberThreads.startC();
