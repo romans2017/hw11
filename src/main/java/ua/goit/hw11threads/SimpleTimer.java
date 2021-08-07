@@ -24,7 +24,7 @@ public class SimpleTimer {
         Thread.sleep(1000);
         System.out.println(LocalDateTime.now().withNano(0).format(DateTimeFormatter.ofPattern("E dd.MM.yyyy HH:mm:ss")));
         incrementalNotifyInterval--;
-        notify();
+        notifyAll();
     }
 
     synchronized public void printIntervalNotify() throws InterruptedException {
@@ -33,7 +33,7 @@ public class SimpleTimer {
         }
         System.out.println("Прошло " + notifyInterval + " сек");
         incrementalNotifyInterval = notifyInterval;
-        notify();
+        notifyAll();
     }
 
     public Thread Timer() {
