@@ -3,11 +3,17 @@ import ua.goit.hw11threads.SimpleTimer;
 
 public class ThreadTest {
 
-    private static void testSimpleTimer() {
+    private static void testSimpleTimer() throws InterruptedException {
         System.out.println("Test SimpleTimer");
         SimpleTimer simpleTimer = new SimpleTimer();
-        simpleTimer.startTimer();
-        simpleTimer.startNotify();
+        Thread timer = simpleTimer.Timer();
+        Thread notify = simpleTimer.Notify();
+
+        timer.start();
+        notify.start();
+
+        timer.join();
+        notify.join();
     }
 
     private static void testNumberThread() throws InterruptedException {

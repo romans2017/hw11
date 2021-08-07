@@ -5,8 +5,8 @@ import java.util.function.IntConsumer;
 
 public class NumberThreads {
 
-    private static boolean SHOW_NOTIFICATIONS = false;
-    private static int N = 15;
+    private final static boolean SHOW_NOTIFICATIONS = false;
+    private final static int N = 15;
 
     private final int n;
     private final String[] result;

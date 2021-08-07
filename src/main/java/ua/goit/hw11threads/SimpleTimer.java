@@ -6,7 +6,7 @@ import java.time.format.DateTimeFormatter;
 public class SimpleTimer {
     private static final int NOTIFY_INTERVAL = 5;
 
-    private int notifyInterval;
+    private final int notifyInterval;
     private int incrementalNotifyInterval;
 
     public SimpleTimer(int notifyInterval) {
@@ -36,7 +36,7 @@ public class SimpleTimer {
         notify();
     }
 
-    public void startTimer() {
+    public Thread Timer() {
         Runnable timer = () -> {
             while (true) {
                 try {
@@ -46,10 +46,10 @@ public class SimpleTimer {
                 }
             }
         };
-        new Thread(timer).start();
+        return new Thread(timer);
     }
 
-    public void startNotify() {
+    public Thread Notify() {
         Runnable notifyTimeInterval = () -> {
             while (true) {
                 try {
@@ -59,6 +59,6 @@ public class SimpleTimer {
                 }
             }
         };
-        new Thread(notifyTimeInterval).start();
+        return new Thread(notifyTimeInterval);
     }
 }
