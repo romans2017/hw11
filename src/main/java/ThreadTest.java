@@ -6,8 +6,8 @@ public class ThreadTest {
     private static void testSimpleTimer() throws InterruptedException {
         System.out.println("Test SimpleTimer");
         SimpleTimer simpleTimer = new SimpleTimer();
-        Thread timer = simpleTimer.Timer();
-        Thread notify = simpleTimer.Notify();
+        Thread timer = simpleTimer.timer();
+        Thread notify = simpleTimer.timerNotify();
 
         timer.start();
         notify.start();

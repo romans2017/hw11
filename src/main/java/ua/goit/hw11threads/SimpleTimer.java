@@ -36,7 +36,7 @@ public class SimpleTimer {
         notifyAll();
     }
 
-    public Thread Timer() {
+    public Thread timer() {
         Runnable timer = () -> {
             while (true) {
                 try {
@@ -49,7 +49,7 @@ public class SimpleTimer {
         return new Thread(timer);
     }
 
-    public Thread Notify() {
+    public Thread timerNotify() {
         Runnable notifyTimeInterval = () -> {
             while (true) {
                 try {
