@@ -18,7 +18,7 @@ public class SimpleTimer {
     }
 
     synchronized public void printCurrentDate() throws InterruptedException {
-        while (incrementalNotifyInterval == 0) {
+        if (incrementalNotifyInterval == 0) {
             wait();
         }
         Thread.sleep(1000);
@@ -28,7 +28,7 @@ public class SimpleTimer {
     }
 
     synchronized public void printIntervalNotify() throws InterruptedException {
-        while (incrementalNotifyInterval > 0) {
+        if (incrementalNotifyInterval > 0) {
             wait();
         }
         System.out.println("Прошло " + notifyInterval + " сек");
